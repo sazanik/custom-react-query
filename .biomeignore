@@ -1,0 +1,15 @@
+# Build outputs
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# React Native specific
+.expo/
+ios/
+android/
+
+# Generated files
+*.generated.ts
+*.generated.tsx 
