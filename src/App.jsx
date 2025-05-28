@@ -5,6 +5,7 @@ function useMediaDevices() {
   return useQuery({
     queryKey: ['mediaDevices'],
     queryFn: async () => {
+      console.log('running query...');
       await sleepToShowLoadingStates(500);
       return navigator.mediaDevices.enumerateDevices();
     },
@@ -21,8 +22,6 @@ function MediaDevices() {
     return <div>We were unable to access your media devices</div>;
   }
 
-  console.log(data);
-
   return <div>You have {data.length} media devices</div>;
 }
 
@@ -31,6 +30,8 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <MediaDevices />
+      <MediaDevices />
       <MediaDevices />
     </QueryClientProvider>
   );

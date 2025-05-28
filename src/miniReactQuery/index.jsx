@@ -33,10 +33,22 @@ export class QueryClient {
   }
   async obtain({ queryKey, queryFn }) {
     try {
-      const data = await queryFn(queryKey);
-      this.set(queryKey, { status: 'success', data });
+      if (!this.get(queryKey).promise) {
+        const promise = queryFn();
+        this.set(queryKey, { promise });
+        const data = await promise;
+        this.set(queryKey, {
+          status: 'success',
+          data,
+          promise: undefined,
+        });
+      }
     } catch (error) {
-      this.set(queryKey, { status: 'error', error });
+      this.set(queryKey, {
+        status: 'error',
+        error,
+        promise: undefined,
+      });
     }
   }
 }
